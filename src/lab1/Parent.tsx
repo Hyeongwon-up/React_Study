@@ -19,10 +19,10 @@ const red: any = {
     textAlign: 'center',
 }
 
+
 const Parent: FC = () => {
     const [level, setLevel] = useState(1);
     const nums: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const [check, setCheck] = useState<boolean[]>([false, false, false, false, false, false, false, false, false]);
     const [checkList, setCheckList]= useState([
         {stage: 1, state: '미완료', active : false},
         {stage: 2, state: '미완료', active : false},
@@ -35,8 +35,6 @@ const Parent: FC = () => {
         {stage: 9, state: '미완료', active : false},
     ]);
 
-
-
     const onClickUpButton = (temp: number) => {
         let count = temp;
         if(level + temp > 9) {
@@ -46,7 +44,7 @@ const Parent: FC = () => {
             count = level + temp;
         }
         setLevel(count)
-        if(check[count] == true) {
+        if(checkList[count-1].active == true) {
             alert(count+'단은 이미 학습했어!')
         }
     }
@@ -60,22 +58,19 @@ const Parent: FC = () => {
             count = level - temp;
         }
         setLevel(count)
-        if(check[count] == true) {
-            alert( count + '단은 이미 학습했어!')
+        if(checkList[count-1].active == true) {
+            alert(count+'단은 이미 학습했어!')
         }
     }
 
     const completeButton = (level: number) => {
-        const newCheck = [];
-        for(let i =0; i<9; i++) {
-            newCheck.push(check[i]);
-        }
         console.log('check');
-        newCheck[level]= true;
-        console.log(newCheck[level]);
-        setCheck(newCheck);
+        const checkcheck = checkList.map(value => value.stage === (level)
+            ?({...value, state: '완료' , active : true})
+            :value
+        );
+        setCheckList(checkcheck)
     }
-
     return(
         <>
             <div style = {black}>
@@ -86,6 +81,15 @@ const Parent: FC = () => {
                 </div>
                 <button onClick = {() => onClickUpButton(1)}>업</button>
                 <button onClick = {() => onClickDownButton(1)}>다운</button>
+                <b style={{
+                        cursor: 'pointer',
+                        color: checkList[level-1].active ? 'green' : 'black'
+                    }}>
+
+                    {checkList[level-1].state}
+
+                </b>
+
             </div>
         </>
     );

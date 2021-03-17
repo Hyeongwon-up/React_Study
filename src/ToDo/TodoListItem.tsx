@@ -1,20 +1,20 @@
 import React, { FunctionComponent } from 'react';
-
+import {Todo, ToggleTodo} from '../types';
+import  "./TodoListItem.css"
 
 
 interface  TodoListItemProps {
-    todo: {
-        text?: string;
-        complete?: boolean;
-    };
+    todo:  Todo;
+    toggleTodo: ToggleTodo;
+
 }
-const TodoListItem: FunctionComponent<TodoListItemProps> = ({todo}) => {
+const TodoListItem: FunctionComponent<TodoListItemProps> = ({todo,toggleTodo}) => {
 
   return (
       <>
           <li>
-              <label>
-                  <input type = "checkbox" checked={todo.complete}/>
+              <label className={todo.complete ? "complete": undefined}>
+                  <input type = "checkbox" checked={todo.complete} onChange={() => toggleTodo(todo)}/>
                   {todo.text}
               </label>
 

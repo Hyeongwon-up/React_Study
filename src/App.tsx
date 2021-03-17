@@ -1,14 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Parent from "./lab1/Parent";
+import TodoListItem from "./ToDo/TodoListItem";
 
 function App() {
   return (
-    <div>
-      <Parent/>
-    </div>
-  );
+
+      <div>
+        <TodoListItem todo={{text:'todo', complete: false}}/>
+      </div>
+    );
 }
 
 export default App;
